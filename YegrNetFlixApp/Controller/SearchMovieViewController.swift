@@ -8,7 +8,6 @@
 import UIKit
 
 class SearchMovieViewController: UIViewController {
-
     @IBOutlet var searchMovieTextField: UITextField!
     @IBOutlet var upComingButton: UIButton!
     @IBOutlet var popularButton: UIButton!
@@ -40,50 +39,29 @@ class SearchMovieViewController: UIViewController {
         searchMovieTextField.tintColor = .black
         
         // buttonUI
-        buttonUI(upComingButton, "blue", " 공개 예정")
-        buttonUI(popularButton, "turquoise", " 모두의 인기 콘텐츠")
-        buttonUI(topTenButton, "pink", " TOP 10 시리즈")
+        upComingButton.setCategoryUI("blue", " 공개 예정")
+        popularButton.setCategoryUI("turquoise", " 모두의 인기 콘텐츠")
+        topTenButton.setCategoryUI("pink", " TOP 10 시리즈")
         
         // labelUI
-        labelUI(noticeLabel, "검색어 없음", 25)
-        labelUI(recommendLabel, "다른 영화, 시리즈, 배우, 감독 또는 장르를 검색해 보세요.", 15)
-
-    }
-    
-    func buttonUI(_ button: UIButton ,_ imageName: String, _ title: String) {
-       
-        button.backgroundColor = .darkGray
-        button.setImage(UIImage(named: imageName), for: .normal)
-        button.setTitle(title, for: .normal)
-        button.tintColor = .white
-        button.layer.cornerRadius = 15
-    }
-    
-    func labelUI(_ label: UILabel, _ text: String, _ fontSize: CGFloat) {
-       
-        label.text = text
-        label.textColor = .white
-        label.numberOfLines = 0
-        label.font = .boldSystemFont(ofSize: fontSize)
-        label.contentMode = .center
+        noticeLabel.setUI("검색어 없음", 25)
+        recommendLabel.setUI("다른 영화, 시리즈, 배우, 감독 또는 장르를 검색해 보세요.", 15)
     }
     
     func buttonClickedUI(_ button: UIButton, _ backgroundColor: UIColor, _ tintColor: UIColor) {
-        
         button.backgroundColor = backgroundColor
         button.tintColor = tintColor
     }
     
     func instructionsLabel(_ notice: String, _ recommend: String) {
-        
         noticeLabel.text = notice
         recommendLabel.text = recommend
     }
     
     @IBAction func searchTextFieldReturnButtonClicked(_ sender: UITextField) {
-        buttonClickedUI(upComingButton, .darkGray, .white)
-        buttonClickedUI(popularButton, .darkGray, .white)
-        buttonClickedUI(topTenButton, .darkGray, .white)
+        upComingButton.setCustomUI(style: .initialized)
+        popularButton.setCustomUI(style: .initialized)
+        topTenButton.setCustomUI(style: .initialized)
         
         if searchMovieTextField.text == "" {
             instructionsLabel("검색어 없음", "다른 영화, 시리즈, 배우, 감독 또는 장르를 검색해 보세요.")
@@ -94,22 +72,58 @@ class SearchMovieViewController: UIViewController {
     
     @IBAction func upComingButtonClicked(_ sender: UIButton) {
         instructionsLabel("아직 공개 예정 작품이 없습니다.", "조금만 기다려주세요!")
-        buttonClickedUI(upComingButton, .white, .black)
-        buttonClickedUI(popularButton, .darkGray, .white)
-        buttonClickedUI(topTenButton, .darkGray, .white)
+        upComingButton.setCustomUI(style: .clicked)
+        popularButton.setCustomUI(style: .initialized)
+        topTenButton.setCustomUI(style: .initialized)
     }
     
     @IBAction func popularButtonClicked(_ sender: UIButton) {
         instructionsLabel("인기 콘텐츠 업데이트 예정입니다.", "조금만 기다려주세요!")
-        buttonClickedUI(upComingButton, .darkGray, .white)
-        buttonClickedUI(popularButton, .white, .black)
-        buttonClickedUI(topTenButton, .darkGray, .white)
+        upComingButton.setCustomUI(style: .initialized)
+        popularButton.setCustomUI(style: .clicked)
+        topTenButton.setCustomUI(style: .initialized)
     }
     
     @IBAction func topTenButtonClicked(_ sender: UIButton) {
         instructionsLabel("Top 10 시리즈!", "조금만 기다려주세요!")
-        buttonClickedUI(upComingButton, .darkGray, .white)
-        buttonClickedUI(popularButton, .darkGray, .white)
-        buttonClickedUI(topTenButton, .white, .black)
+        upComingButton.setCustomUI(style: .initialized)
+        popularButton.setCustomUI(style: .initialized)
+        topTenButton.setCustomUI(style: .clicked)
     }
+}
+
+extension UIButton {
+    func setCustomUI(style: ButtonStyle) {
+        switch style {
+        case .clicked:
+            backgroundColor = .white
+            tintColor = .black
+        case .initialized:
+            backgroundColor = .darkGray
+            tintColor = .white
+        }
+    }
+    
+    func setCategoryUI(_ imageName: String, _ title: String) {
+        backgroundColor = .darkGray
+        setImage(UIImage(named: imageName), for: .normal)
+        setTitle(title, for: .normal)
+        tintColor = .white
+        layer.cornerRadius = 15
+    }
+}
+
+extension UILabel {
+    func setUI(_ title: String, _ fontSize: CGFloat) {
+        text = title
+        textColor = .white
+        numberOfLines = 0
+        font = .boldSystemFont(ofSize: fontSize)
+        contentMode = .center
+    }
+}
+
+enum ButtonStyle {
+    case clicked
+    case initialized
 }

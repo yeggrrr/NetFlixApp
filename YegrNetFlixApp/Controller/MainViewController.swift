@@ -8,7 +8,6 @@
 import UIKit
 
 class MainViewController: UIViewController {
-
     @IBOutlet var logoutBarButtonItem: UIBarButtonItem!
     @IBOutlet var posterImageView: UIImageView!
     @IBOutlet var genreLabel: UILabel!
@@ -21,7 +20,7 @@ class MainViewController: UIViewController {
     @IBOutlet var secondBadgeImageView: UIImageView!
     @IBOutlet var thirdImageView: UIImageView!
     @IBOutlet var thirdBadgeImageView: UIImageView!
-   
+    
     let posterList: [String] = ["노량", "밀수", "서울의봄", "콘크리트유토피아", "더퍼스트슬램덩크", "범죄도시3", "스즈메의문단속", "아바타물의길", "오펜하이머", "육사오"]
     
     override func viewDidLoad() {
@@ -34,56 +33,29 @@ class MainViewController: UIViewController {
         view.backgroundColor = .black
         title = "YEGR님"
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-
+        
         // logoutBarButtonItem
         logoutBarButtonItem.title = "로그아웃"
         logoutBarButtonItem.tintColor = .white
         
         // imageViewUI
-        imageViewUI(posterImageView, "노량", 15)
-        imageViewUI(firstImageView, "밀수", 10)
-        imageViewUI(secondImageView, "서울의봄", 10)
-        imageViewUI(thirdImageView, "콘크리트유토피아", 10)
+        posterImageView.setUI("노량", cornerRadius:15)
+        firstImageView.setUI("밀수", cornerRadius:10)
+        secondImageView.setUI("서울의봄", cornerRadius:10)
+        thirdImageView.setUI("콘크리트유토피아", cornerRadius:10)
         
         // labelUI
-        labelUI(genreLabel, "응원하고픈 ・ 흥미진진 ・ 사극 ・ 전투 ・ 한국 작품", .center)
-        labelUI(centerLabel, "지금 뜨는 콘텐츠", .left)
+        genreLabel.setUI("응원하고픈 ・ 흥미진진 ・ 사극 ・ 전투 ・ 한국 작품", .center)
+        centerLabel.setUI("지금 뜨는 콘텐츠", .left)
         
         // buttonUI
-        buttonUI(playButton, .white, .black, "play.fill", "   재생")
-        buttonUI(addWishListButton, .darkGray, .white, "plus", " 내가 찜한 리스트")
+        playButton.setUI(.white, .black, "play.fill", "   재생")
+        addWishListButton.setUI(.darkGray, .white, "plus", " 내가 찜한 리스트")
         
         // // badgeImageViewUI
-        badgeImageViewUI(firstBadgeImageView, "top10 badge", false)
-        badgeImageViewUI(secondBadgeImageView, "top10 badge", false)
-        badgeImageViewUI(thirdBadgeImageView, "single-badge", false)
-    }
-    
-    func labelUI(_ label: UILabel, _ text: String, _ alignment: NSTextAlignment) {
-        label.text = text
-        label.font = .boldSystemFont(ofSize: 17)
-        label.textColor = .white
-        label.textAlignment = alignment
-    }
-    
-    func imageViewUI(_ imageView: UIImageView, _ imageName: String , _ cornerRadius: CGFloat) {
-        imageView.image = UIImage(named: imageName)
-        imageView.layer.cornerRadius = cornerRadius
-        imageView.contentMode = .scaleAspectFill
-    }
-    
-    func badgeImageViewUI(_ imageView: UIImageView, _ badgeName: String, _ isHidden: Bool) {
-        imageView.image = UIImage(named: badgeName)
-        imageView.contentMode = .scaleToFill
-        imageView.isHidden = isHidden
-    }
-    
-    func buttonUI(_ button: UIButton, _ backgroundColor: UIColor, _ tintColor: UIColor, _ imageName: String, _ title: String) {
-        button.backgroundColor = backgroundColor
-        button.setImage(UIImage(systemName: imageName), for: .normal)
-        button.setTitle(title, for: .normal)
-        button.tintColor = tintColor
-        button.layer.cornerRadius = 5
+        firstBadgeImageView.setBadgeUI("top10 badge", hidden: false)
+        secondBadgeImageView.setBadgeUI("top10 badge", hidden: false)
+        thirdBadgeImageView.setBadgeUI("single-badge", hidden: false)
     }
     
     @IBAction func logoutBarButtonItemClicked(_ sender: UIBarButtonItem) {
@@ -91,7 +63,6 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func playButtonClicked(_ sender: UIButton) {
-
         var randomNums: Set<Int> = []
         
         while randomNums.count < 4 {
@@ -100,32 +71,58 @@ class MainViewController: UIViewController {
         }
         
         let randomArray = Array(randomNums)
-        let firstNum = randomArray[0]
-        let secondNum = randomArray[1]
-        let thirdNum = randomArray[2]
-        let forthNum = randomArray[3]
+        var imageList: [String] = []
         
-        let posterImage = posterList[firstNum]
-        let firstImage = posterList[secondNum]
-        let secondImage = posterList[thirdNum]
-        let thirdImage = posterList[forthNum]
+        for i in 0..<randomArray.count {
+            let num = randomArray[i]
+            imageList.append(posterList[num])
+        }
         
-        posterImageView.image = UIImage(named: "\(posterImage)")
-        firstImageView.image = UIImage(named: "\(firstImage)")
-        secondImageView.image = UIImage(named: "\(secondImage)")
-        thirdImageView.image = UIImage(named: "\(thirdImage)")
+        let imageViews = [posterImageView, firstImageView, secondImageView, thirdImageView]
         
-        let firstBoolType:[Bool] = [true, false]
-        guard let firstRandomBool = firstBoolType.randomElement() else { return }
+        for i in 0..<imageViews.count {
+            let imageName = imageList[i]
+            let imageView = imageViews[i]
+            imageView?.image = UIImage(named: imageName)
+        }
         
-        let secondBoolType:[Bool] = [true, false]
-        guard let secondRandomBool = secondBoolType.randomElement() else { return }
+        let boolList:[Bool] = [true, false]
         
-        let thirdBoolType:[Bool] = [true, false]
-        guard let thirdRandomBool = thirdBoolType.randomElement() else { return }
-        
-        firstBadgeImageView.isHidden = firstRandomBool
-        secondBadgeImageView.isHidden = secondRandomBool
-        thirdBadgeImageView.isHidden = thirdRandomBool
+        [firstBadgeImageView, secondBadgeImageView, thirdBadgeImageView].forEach {
+            $0.isHidden = boolList.randomElement() ?? false
+        }
+    }
+}
+
+extension UIImageView {
+    func setUI(_ imageName: String , cornerRadius: CGFloat) {
+        image = UIImage(named: imageName)
+        layer.cornerRadius = cornerRadius
+        contentMode = .scaleAspectFill
+    }
+    
+    func setBadgeUI(_ badgeName: String, hidden: Bool) {
+        image = UIImage(named: badgeName)
+        contentMode = .scaleToFill
+        isHidden = hidden
+    }
+}
+
+extension UIButton {
+    func setUI(_ backgroundColorStyle: UIColor, _ tintColorStyle: UIColor, _ imageName: String, _ title: String) {
+        backgroundColor = backgroundColorStyle
+        setImage(UIImage(systemName: imageName), for: .normal)
+        setTitle(title, for: .normal)
+        tintColor = tintColorStyle
+        layer.cornerRadius = 5
+    }
+}
+
+extension UILabel {
+    func setUI(_ title: String, _ alignment: NSTextAlignment) {
+        text = title
+        font = .boldSystemFont(ofSize: 17)
+        textColor = .white
+        textAlignment = alignment
     }
 }

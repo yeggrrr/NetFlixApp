@@ -8,7 +8,6 @@
 import UIKit
 
 class SaveListViewController: UIViewController {
-
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var titleImageView: UIImageView!
@@ -27,36 +26,39 @@ class SaveListViewController: UIViewController {
         navigationUI()
         
         // labelUI
-        labelUI(titleLabel, "'나만의 자동 저장' 기능", 23)
-        labelUI(descriptionLabel, "취향에 맞는 영화와 시리즈를 자동으로 저장해드립니다. \n디바이스에 언제나 시청할 콘텐츠가 준비되니 \n지루할 틈이 없어요!", 15)
+        titleLabel.setCustomTitle("'나만의 자동 저장' 기능", fontSize: 23)
+        descriptionLabel.setCustomTitle("취향에 맞는 영화와 시리즈를 자동으로 저장해드립니다. \n디바이스에 언제나 시청할 콘텐츠가 준비되니 \n지루할 틈이 없어요!", fontSize: 15)
         
         // buttonUI
-        buttonUI(settingButton, .systemBlue, "설정하기", .white)
-        buttonUI(detailButton, .white, "저장 가능한 콘텐츠 살펴보기", .black)
+        settingButton.setCustomUI("설정하기", background: .systemBlue, tint: .white)
+        detailButton.setCustomUI("저장 가능한 콘텐츠 살펴보기", background: .white, tint: .black)
         
         // titleImageView
         titleImageView.image = UIImage(named: "dummy")
         titleImageView.contentMode = .scaleAspectFill
-
     }
     
     func navigationUI() {
         navigationItem.title = "저장한 콘텐츠 목록"
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
-    
-    func labelUI(_ label: UILabel ,_ text: String, _ fontSize: CGFloat) {
-        label.text = text
-        label.textColor = .white
-        label.font = .boldSystemFont(ofSize: fontSize)
-        label.textAlignment = .center
-        label.contentMode = .center
+}
+
+extension UILabel {
+    func setCustomTitle(_ title: String, fontSize: CGFloat) {
+        text = title
+        textColor = .white
+        font = .boldSystemFont(ofSize: fontSize)
+        textAlignment = .center
+        contentMode = .center
     }
-    
-    func buttonUI(_ button: UIButton, _ backgroundColor: UIColor, _ title: String, _ tintColor: UIColor) {
-        button.backgroundColor = backgroundColor
-        button.setTitle(title, for: .normal)
-        button.tintColor = tintColor
-        button.layer.cornerRadius = 5
+}
+
+extension UIButton {
+    func setCustomUI(_ title: String, background: UIColor, tint: UIColor) {
+        backgroundColor = background
+        setTitle(title, for: .normal)
+        tintColor = tint
+        layer.cornerRadius = 5
     }
 }

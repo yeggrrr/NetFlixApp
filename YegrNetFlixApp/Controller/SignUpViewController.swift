@@ -8,7 +8,6 @@
 import UIKit
 
 class SignUpViewController: UIViewController {
-
     @IBOutlet var logoLabel: UILabel!
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
@@ -26,55 +25,28 @@ class SignUpViewController: UIViewController {
     }
     
     func configureUI() {
-        
         view.backgroundColor = .black
         
         // labelUI
-        labelUI(logoLabel, "YEGRFLIX", .systemRed, .center)
-        labelUI(addInfoLabel, "추가 정보 입력", .white, .left)
+        logoLabel.setCustomUI("YEGRFLIX", textColorStyle: .systemRed, .center)
+        addInfoLabel.setCustomUI("추가 정보 입력", textColorStyle: .white, .left)
         addInfoLabel.font = .boldSystemFont(ofSize: 17)
         
         // textFieldUI
-        textFieldUI(emailTextField, "이메일 주소 또는 전화번호", false, .emailAddress)
-        textFieldUI(passwordTextField, "비밀번호", true, .default)
-        textFieldUI(nicknameTextField, "닉네임", false, .default)
-        textFieldUI(locationTextField, "위치", false, .default)
-        textFieldUI(recommendCodeTextField, "추천 코드", false, .numberPad)
+        emailTextField.setCustomUI("이메일 주소 또는 전화번호", false, .emailAddress)
+        passwordTextField.setCustomUI("비밀번호", true, .default)
+        nicknameTextField.setCustomUI("닉네임", false, .default)
+        locationTextField.setCustomUI("위치", false, .default)
+        recommendCodeTextField.setCustomUI("추천 코드", false, .numberPad)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
        // signUpButton
-        signUpButton.setTitle("회원가입", for: .normal)
-        signUpButton.setTitle("회원가입", for: .highlighted)
-        signUpButton.setTitleColor(.black, for: .normal)
-        signUpButton.setTitleColor(.darkGray, for: .highlighted)
-        signUpButton.configuration?.titleAlignment = .center
-        signUpButton.backgroundColor = .white
-        signUpButton.layer.cornerRadius = 8
+        signUpButton.signUpStyle()
         
         // addInfoSwitch
         addInfoSwitch.onTintColor = .systemRed
-    }
-    
-    func textFieldUI(_ textField: UITextField, _ placeholderText: String, _ isSecureText: Bool, _ keyboardType: UIKeyboardType) {
-        
-        textField.attributedPlaceholder = NSAttributedString(
-            string: placeholderText,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
-        )
-        textField.backgroundColor = .darkGray
-        textField.textColor = .white
-        textField.keyboardType = .default
-        textField.isSecureTextEntry = isSecureText
-        textField.returnKeyType = .done
-        textField.keyboardAppearance = .dark
-    }
-    
-    func labelUI(_ label: UILabel, _ text: String, _ textColor: UIColor, _ alignment: NSTextAlignment) {
-        label.text = text
-        label.textColor = textColor
-        label.textAlignment = .center
     }
     
     // textfield return exit action
@@ -92,5 +64,40 @@ class SignUpViewController: UIViewController {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+}
+
+extension UITextField {
+    func setCustomUI(_ placeholderText: String, _ isSecureText: Bool, _ keyboardStyle: UIKeyboardType) {
+        attributedPlaceholder = NSAttributedString(
+            string: placeholderText,
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
+        )
+        backgroundColor = .darkGray
+        textColor = .white
+        keyboardType = keyboardStyle
+        isSecureTextEntry = isSecureText
+        returnKeyType = .done
+        keyboardAppearance = .dark
+    }
+}
+
+extension UIButton {
+    func signUpStyle() {
+        setTitle("회원가입", for: .normal)
+        setTitle("회원가입", for: .highlighted)
+        setTitleColor(.black, for: .normal)
+        setTitleColor(.darkGray, for: .highlighted)
+        configuration?.titleAlignment = .center
+        backgroundColor = .white
+        layer.cornerRadius = 8
+    }
+}
+
+extension UILabel {
+    func setCustomUI(_ title: String, textColorStyle: UIColor, _ alignment: NSTextAlignment) {
+        text = title
+        textColor = textColorStyle
+        textAlignment = alignment
     }
 }
