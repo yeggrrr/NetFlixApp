@@ -29,65 +29,17 @@ class SignUpViewController: UIViewController {
         
         view.backgroundColor = .black
         
-        // logoLabel - font: blackStyle로 하고 싶은데 못 찾아서 스토리보드로 설정
-        logoLabel.text = "YEGRFLIX"
-        logoLabel.textColor = .systemRed
-        logoLabel.textAlignment = .center
+        // labelUI
+        labelUI(logoLabel, "YEGRFLIX", .systemRed, .center)
+        labelUI(addInfoLabel, "추가 정보 입력", .white, .left)
+        addInfoLabel.font = .boldSystemFont(ofSize: 17)
         
-        //emailTextField
-        emailTextField.attributedPlaceholder = NSAttributedString(
-            string: "이메일 주소 또는 전화번호",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
-        )
-        emailTextField.backgroundColor = .darkGray
-        emailTextField.textColor = .white
-        emailTextField.keyboardType = .emailAddress
-        emailTextField.returnKeyType = .done
-        emailTextField.keyboardAppearance = .dark
-        
-        // passwordTextField
-        passwordTextField.attributedPlaceholder = NSAttributedString(
-            string: "비밀번호",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
-        )
-        passwordTextField.backgroundColor = .darkGray
-        passwordTextField.textColor = .white
-        passwordTextField.keyboardType = .default
-        passwordTextField.isSecureTextEntry = true
-        passwordTextField.returnKeyType = .done
-        passwordTextField.keyboardAppearance = .dark
-        
-        // nicknameTextField
-        nicknameTextField.attributedPlaceholder = NSAttributedString(
-            string: "닉네임",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
-        )
-        nicknameTextField.backgroundColor = .darkGray
-        nicknameTextField.textColor = .white
-        nicknameTextField.keyboardType = .default
-        nicknameTextField.returnKeyType = .done
-        nicknameTextField.keyboardAppearance = .dark
-        
-        // locationTextField
-        locationTextField.attributedPlaceholder = NSAttributedString(
-            string: "위치",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
-        )
-        locationTextField.backgroundColor = .darkGray
-        locationTextField.textColor = .white
-        locationTextField.keyboardType = .default
-        locationTextField.returnKeyType = .done
-        locationTextField.keyboardAppearance = .dark
-        
-        // recommendCodeTextField
-        recommendCodeTextField.attributedPlaceholder = NSAttributedString(
-            string: "추천 코드",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
-        )
-        recommendCodeTextField.backgroundColor = .darkGray
-        recommendCodeTextField.textColor = .white
-        recommendCodeTextField.keyboardType = .numberPad
-        recommendCodeTextField.keyboardAppearance = .dark
+        // textFieldUI
+        textFieldUI(emailTextField, "이메일 주소 또는 전화번호", false, .emailAddress)
+        textFieldUI(passwordTextField, "비밀번호", true, .default)
+        textFieldUI(nicknameTextField, "닉네임", false, .default)
+        textFieldUI(locationTextField, "위치", false, .default)
+        textFieldUI(recommendCodeTextField, "추천 코드", false, .numberPad)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -101,14 +53,28 @@ class SignUpViewController: UIViewController {
         signUpButton.backgroundColor = .white
         signUpButton.layer.cornerRadius = 8
         
-        // addInfoLabel
-        addInfoLabel.text = "추가 정보 입력"
-        addInfoLabel.textColor = .white
-        addInfoLabel.textAlignment = .left
-        addInfoLabel.font = .boldSystemFont(ofSize: 17)
-        
         // addInfoSwitch
         addInfoSwitch.onTintColor = .systemRed
+    }
+    
+    func textFieldUI(_ textField: UITextField, _ placeholderText: String, _ isSecureText: Bool, _ keyboardType: UIKeyboardType) {
+        
+        textField.attributedPlaceholder = NSAttributedString(
+            string: placeholderText,
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
+        )
+        textField.backgroundColor = .darkGray
+        textField.textColor = .white
+        textField.keyboardType = .default
+        textField.isSecureTextEntry = isSecureText
+        textField.returnKeyType = .done
+        textField.keyboardAppearance = .dark
+    }
+    
+    func labelUI(_ label: UILabel, _ text: String, _ textColor: UIColor, _ alignment: NSTextAlignment) {
+        label.text = text
+        label.textColor = textColor
+        label.textAlignment = .center
     }
     
     // textfield return exit action

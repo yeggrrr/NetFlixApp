@@ -23,36 +23,40 @@ class SaveListViewController: UIViewController {
     
     func configureUI() {
         view.backgroundColor = .black
-        navigationItem.title = "저장한 콘텐츠 목록"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
-        // titleLabel
-        titleLabel.text = "'나만의 자동 저장' 기능"
-        titleLabel.textColor = .white
-        titleLabel.font = .boldSystemFont(ofSize: 23)
-        titleLabel.contentMode = .center
+        navigationUI()
         
-        // descriptionLabel
-        descriptionLabel.text = "취향에 맞는 영화와 시리즈를 자동으로 저장해드립니다. \n디바이스에 언제나 시청할 콘텐츠가 준비되니 \n지루할 틈이 없어요!"
-        descriptionLabel.textColor = .white
-        descriptionLabel.font = .systemFont(ofSize: 15)
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.contentMode = .center
+        // labelUI
+        labelUI(titleLabel, "'나만의 자동 저장' 기능", 23)
+        labelUI(descriptionLabel, "취향에 맞는 영화와 시리즈를 자동으로 저장해드립니다. \n디바이스에 언제나 시청할 콘텐츠가 준비되니 \n지루할 틈이 없어요!", 15)
+        
+        // buttonUI
+        buttonUI(settingButton, .systemBlue, "설정하기", .white)
+        buttonUI(detailButton, .white, "저장 가능한 콘텐츠 살펴보기", .black)
         
         // titleImageView
         titleImageView.image = UIImage(named: "dummy")
         titleImageView.contentMode = .scaleAspectFill
-        
-        // settingButton
-        settingButton.backgroundColor = .systemBlue
-        settingButton.setTitle("설정하기", for: .normal)
-        settingButton.tintColor = .white
-        settingButton.layer.cornerRadius = 5
-        
-        // detailButton
-        detailButton.backgroundColor = .white
-        detailButton.setTitle("설정하기", for: .normal)
-        detailButton.tintColor = .black
-        detailButton.layer.cornerRadius = 5
+
+    }
+    
+    func navigationUI() {
+        navigationItem.title = "저장한 콘텐츠 목록"
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+    }
+    
+    func labelUI(_ label: UILabel ,_ text: String, _ fontSize: CGFloat) {
+        label.text = text
+        label.textColor = .white
+        label.font = .boldSystemFont(ofSize: fontSize)
+        label.textAlignment = .center
+        label.contentMode = .center
+    }
+    
+    func buttonUI(_ button: UIButton, _ backgroundColor: UIColor, _ title: String, _ tintColor: UIColor) {
+        button.backgroundColor = backgroundColor
+        button.setTitle(title, for: .normal)
+        button.tintColor = tintColor
+        button.layer.cornerRadius = 5
     }
 }

@@ -39,67 +39,51 @@ class MainViewController: UIViewController {
         logoutBarButtonItem.title = "로그아웃"
         logoutBarButtonItem.tintColor = .white
         
-        // posterImageView
-        posterImageView.image = UIImage(named: "노량")
-        posterImageView.contentMode = .scaleAspectFill
-        posterImageView.layer.cornerRadius = 15
+        // imageViewUI
+        imageViewUI(posterImageView, "노량", 15)
+        imageViewUI(firstImageView, "밀수", 10)
+        imageViewUI(secondImageView, "서울의봄", 10)
+        imageViewUI(thirdImageView, "콘크리트유토피아", 10)
         
-        // genreLabel
-        genreLabel.text = "응원하고픈 ・ 흥미진진 ・ 사극 ・ 전투 ・ 한국 작품"
-        genreLabel.font = .boldSystemFont(ofSize: 17)
-        genreLabel.textColor = .white
-        genreLabel.textAlignment = .center
+        // labelUI
+        labelUI(genreLabel, "응원하고픈 ・ 흥미진진 ・ 사극 ・ 전투 ・ 한국 작품", .center)
+        labelUI(centerLabel, "지금 뜨는 콘텐츠", .left)
         
-        // playButton
-        playButton.backgroundColor = .white
-        playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-        playButton.setTitle("   재생", for: .normal)
-        playButton.tintColor = .black
-        playButton.titleLabel?.textColor = .black
-        playButton.layer.cornerRadius = 5
+        // buttonUI
+        buttonUI(playButton, .white, .black, "play.fill", "   재생")
+        buttonUI(addWishListButton, .darkGray, .white, "plus", " 내가 찜한 리스트")
         
-        // addWishListButton
-        addWishListButton.backgroundColor = .darkGray
-        addWishListButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        addWishListButton.setTitle(" 내가 찜한 리스트", for: .normal)
-        addWishListButton.tintColor = .white
-        addWishListButton.layer.cornerRadius = 5
-        
-        // centerLabel
-        centerLabel.text = "지금 뜨는 콘텐츠"
-        centerLabel.font = .boldSystemFont(ofSize: 17)
-        centerLabel.textColor = .white
-        centerLabel.textAlignment = .left
-        
-        // firstImageView
-        firstImageView.image = UIImage(named: "밀수")
-        firstImageView.layer.cornerRadius = 10
-        firstImageView.contentMode = .scaleAspectFill
-        
-        // secondImageView
-        secondImageView.image = UIImage(named: "서울의봄")
-        secondImageView.layer.cornerRadius = 10
-        secondImageView.contentMode = .scaleAspectFill
-        
-        // thirdImageView
-        thirdImageView.image = UIImage(named: "콘크리트유토피아")
-        thirdImageView.layer.cornerRadius = 10
-        thirdImageView.contentMode = .scaleAspectFill
-        
-        // firstBadgeImageView
-        firstBadgeImageView.image = UIImage(named: "top10 badge")
-        firstBadgeImageView.contentMode = .scaleToFill
-        firstBadgeImageView.isHidden = false
-        
-        // secondBadgeImageView
-        secondBadgeImageView.image = UIImage(named: "top10 badge")
-        secondBadgeImageView.contentMode = .scaleToFill
-        secondBadgeImageView.isHidden = false
-        
-        // thirdBadgeImageView
-        thirdBadgeImageView.image = UIImage(named: "single-badge")
-        thirdBadgeImageView.contentMode = .scaleToFill
-        thirdBadgeImageView.isHidden = false
+        // // badgeImageViewUI
+        badgeImageViewUI(firstBadgeImageView, "top10 badge", false)
+        badgeImageViewUI(secondBadgeImageView, "top10 badge", false)
+        badgeImageViewUI(thirdBadgeImageView, "single-badge", false)
+    }
+    
+    func labelUI(_ label: UILabel, _ text: String, _ alignment: NSTextAlignment) {
+        label.text = text
+        label.font = .boldSystemFont(ofSize: 17)
+        label.textColor = .white
+        label.textAlignment = alignment
+    }
+    
+    func imageViewUI(_ imageView: UIImageView, _ imageName: String , _ cornerRadius: CGFloat) {
+        imageView.image = UIImage(named: imageName)
+        imageView.layer.cornerRadius = cornerRadius
+        imageView.contentMode = .scaleAspectFill
+    }
+    
+    func badgeImageViewUI(_ imageView: UIImageView, _ badgeName: String, _ isHidden: Bool) {
+        imageView.image = UIImage(named: badgeName)
+        imageView.contentMode = .scaleToFill
+        imageView.isHidden = isHidden
+    }
+    
+    func buttonUI(_ button: UIButton, _ backgroundColor: UIColor, _ tintColor: UIColor, _ imageName: String, _ title: String) {
+        button.backgroundColor = backgroundColor
+        button.setImage(UIImage(systemName: imageName), for: .normal)
+        button.setTitle(title, for: .normal)
+        button.tintColor = tintColor
+        button.layer.cornerRadius = 5
     }
     
     @IBAction func logoutBarButtonItemClicked(_ sender: UIBarButtonItem) {
